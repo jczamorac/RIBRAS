@@ -4,7 +4,7 @@
 /*! @file SetupConstruction.hh
   @brief Defines mandatory user class SetupConstruction.
   @author Flechas (D. Flechas dcflechasg@unal.edu.co)
-  @date  Sep. 2017
+  @date  Nov. 2018
   @version 1.0
   
   In this header file, the 'physical' setup is defined: materials, geometries and positions. 

@@ -1,0 +1,38 @@
+Base simulation: Version 0 of RIBRAS simulation in Multi-Threading
+mode. Simulation compiles and runs.
+
+The aim is to update the simulation (unsolenoide) to Multi-Thread mode
+of RIBRAS line, USP, writen by J.C. Zamora (master thesis ~2013?).
+
+The simulation includes:
+- Basic geometry -> one solenoid
+- Primary particle -> ParticleGun and GPS
+- Electromagnetic field -> following the base simulation
+- One Sensitive Detector -> SDSiliconMonitor which uses SiliconHit
+- EventAction -> It so not do anything XD
+- Output -> Root
+            - Defined at RunAction
+	    - Filled at Run
+- Macros
+
+- Original classes BeamTestEventAction and Analysis were migrated and
+  rewritten at RunAction and Run.
+
+DO IT:
+-Indluded:
+    - EventAction
+    - Analysis
+    - RunAction
+    - Run
+    - SDSilicoMonitor
+    - SiliconMonitorHit
+    - Macros
+    
+TO DO:
+- Indlude user-defined PhysicsList
+- Include other sensitive detectors
+- Preliminar test of the simulation
+- Define Solenoid as idependent object (Construc_Solenoid)
+- Define Electromagnetic field for more than one soleniod
+- Final test of the simulation
+- Feedback

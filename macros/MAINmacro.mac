@@ -1,0 +1,62 @@
+### parameters section
+/run/verbose 1
+#/tracking/verbose 1
+#/geometry/navigator/verbose 1
+
+#/testhadr/Physics QGSP_BERT_HP
+
+#Start here
+/run/initialize
+
+#/GFNUNDetectors/update
+
+#visualize? remember to set the correct flags!
+/control/execute macros/vis.mac
+
+#print?1
+#/control/execute macros/print.mac
+
+##### 1D accelerator beam
+#/gps/particle ion
+#/gps/ion 8 16 0 0
+#/gps/particle e-
+#/gps/pos/type Beam
+#
+# the incident surface is in the y-z plane
+#/gps/pos/rot1 0 1 0
+#/gps/pos/rot2 0 0 1
+#
+# the beam spot is centered at the origin and is
+# of 1d gaussian shape with a 0mm central plateau
+# and 0.36 mm total X-dispersion (+-3*sigma)
+# and 0.88 mm total Y-dispersion (+-3*sigma)
+#/gps/pos/shape Circle
+#/gps/pos/radius 0.0 mm
+#/gps/pos/centre 0. 0. 0. cm
+#/gps/pos/sigma_x 0.06 mm
+#/gps/pos/sigma_y 0.147 mm
+#
+# the beam is travelling along the x-axis with
+# 32.5 mrad total X-dispersion (+-3*sigma)
+# 13.0 mrad total Y-dispersion (+-3*sigma)
+#/gps/ang/rot1 0 0 1
+#/gps/ang/rot2 0 1 0
+#/gps/ang/type beam2d
+#/gps/ang/sigma_y 0.00542 rad  ## 
+#/gps/ang/sigma_x 0.00217 rad  ##
+#
+# the beam energy is in gaussian profile centered at 50 MeV
+# with a 1% (0.5 MeV) total dispersion (+-3*sigma, sigma=0.083MeV)
+#/gps/ene/type Gauss
+#/gps/ene/mono 40.0 keV
+#/gps/ene/sigma 0.07 keV
+
+/run/beamOn 5
+
+
+#/vis/disable
+#/run/beamOn 10000
+#/vis/enable
+#/vis/drawOnlyToBeKeptEvents
+#/vis/reviewKeptEvents
+

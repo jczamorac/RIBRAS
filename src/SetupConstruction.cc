@@ -2,7 +2,7 @@
   @brief Defines mandatory user class SetupConstruction.
   @author Flechas (D. Flechas dcflechasg@unal.edu.co)
   @author Andre (andreserra@ymail.com)
-  @based on A01DetectorConstruction class -> J. Zamora  ---
+  @based on A01DetectorConstruction class -> J. Zamora  jczamorac@gmail.com
   @date  Oct. 2018
   In this source file, the 'physical' setup is defined: materials, geometries and positions. 
   This class defines the experimental hall used in the toolkit.
@@ -11,6 +11,7 @@
 /* no-geant4 classes*/
 #include "SetupConstruction.hh"
 #include "MagneticField.hh"
+#include "SDSiliconMonitor.hh"
 
 /*  units  */
 #include "G4UnitsTable.hh"
@@ -139,13 +140,13 @@ void SetupConstruction::ConstructSetup(void)
   ////// Beam - monitor //////
   ////////////////////////////
   G4double monitor_length = 50.0*cm;
-  G4double monitor_thick = 10.0*um;
+  G4double monitor_thick = 20.0*um;
   G4ThreeVector Pos_BeamMonitor = G4ThreeVector(0.,0.,150.*cm);
   
   G4VSolid* Sol_BeamMonitor = new G4Box("S_BeamMonitor", // Name
                                          monitor_length/2.0,                // x half length
                                          monitor_length/2.0,                // y half length
-                                         monitor_thick) ;             // z half length
+                                         monitor_thick/2.0) ;             // z half length
   G4LogicalVolume* Log_BeamMonitor =
     new G4LogicalVolume(Sol_BeamMonitor,       // Solid
                         G4NistManager::Instance()->FindOrBuildMaterial("G4_Galactic"),// Material
@@ -224,18 +225,17 @@ void SetupConstruction::UpdateGeometry()
 //!  Sensitive detectors : MultiFunctionalDetector
 void SetupConstruction::ConstructSDandField()
 {
-  // G4SDManager::GetSDMpointer()->SetVerboseLevel(1);
-  // MultiFunctionalDetector
-  // Define MultiFunctionalDetector with name.
-  G4MultiFunctionalDetector* mFDet = new G4MultiFunctionalDetector("DetectorsVol1");
-  G4SDManager::GetSDMpointer()->AddNewDetector(mFDet);
-  // PS : Primitive Scorers
-  G4VPrimitiveScorer* scorer0 = new G4PSEnergyDeposit("Edep");
-  //  Register primitive scorers to MultiFunctionalDetector
-  mFDet->RegisterPrimitive(scorer0);
-  //  SetSensitiveDetector("cyl_log",mFDet);
+  /////////////////////////
+  // Sensitive Detectors //
+  /////////////////////////
+  //  Sensitive Detector Manager.
+  G4SDManager* pSDman = G4SDManager::GetSDMpointer();
+  
+  SDSiliconMonitor* SDmonitor = new SDSiliconMonitor("Monitor");
 
-
+  pSDman->AddNewDetector(SDmonitor);
+  SetSensitiveDetector("L_BeamMonitor",SDmonitor);
+  
   ////////////////////
   // Magnetic field //
   ////////////////////

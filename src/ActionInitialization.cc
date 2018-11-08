@@ -1,7 +1,7 @@
 #include "ActionInitialization.hh"
 #include "PrimaryGeneratorAction.hh"
-//#include "RunAction.hh"
-//#include "EventAction.hh"
+#include "RunAction.hh"
+#include "EventAction.hh"
 // #include "TrackingAction.hh"
 // #include "SteppingAction.hh"
 
@@ -20,7 +20,7 @@ ActionInitialization::~ActionInitialization()
 
 void ActionInitialization::BuildForMaster() const
 {
-  //SetUserAction(new RunAction);
+  SetUserAction(new RunAction);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -28,8 +28,8 @@ void ActionInitialization::BuildForMaster() const
 void ActionInitialization::Build() const
 {
   SetUserAction(new PrimaryGeneratorAction);
-  //SetUserAction(new RunAction);
-  //SetUserAction(new EventAction); 
+  SetUserAction(new RunAction);
+  SetUserAction(new EventAction); 
   // SetUserAction(new TrackingAction());
   // SetUserAction(new SteppingAction());
 }  
