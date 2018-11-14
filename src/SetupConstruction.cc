@@ -11,7 +11,7 @@
 /* no-geant4 classes*/
 #include "SetupConstruction.hh"
 #include "MagneticField.hh"
-#include "SDSiliconMonitor.hh"
+#include "SDMonitor.hh"
 
 /*  units  */
 #include "G4UnitsTable.hh"
@@ -231,7 +231,7 @@ void SetupConstruction::ConstructSDandField()
   //  Sensitive Detector Manager.
   G4SDManager* pSDman = G4SDManager::GetSDMpointer();
   
-  SDSiliconMonitor* SDmonitor = new SDSiliconMonitor("Monitor");
+  SDMonitor* SDmonitor = new SDMonitor("Monitor");
 
   pSDman->AddNewDetector(SDmonitor);
   SetSensitiveDetector("L_BeamMonitor",SDmonitor);

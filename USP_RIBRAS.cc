@@ -19,12 +19,11 @@
 #include "G4PhysListFactory.hh"
 #include "G4VModularPhysicsList.hh"
 #include "G4VUserActionInitialization.hh"
+#include "G4ParallelWorldPhysics.hh"
 
 #include "SetupConstruction.hh"
 #include "ActionInitialization.hh"
-//#include "PhysicsList.hh"
-//#include "PhysicsListMessenger.hh"
-//#include "G4EmUserPhysics.hh" // No Geant4 class, own defined
+#include "PhysicsList.hh"
 
 //#include "SteppingAction.hh"*/
 
@@ -60,42 +59,34 @@ int main(int argc,char** argv) {
   runManager->SetUserInitialization(new SetupConstruction);
 
   G4PhysListFactory factory;
-  //G4VModularPhysicsList* physlist = 0;
-  G4VModularPhysicsList* physlist = factory.GetReferencePhysList("Shielding");
-  /*
-  PhysicsListMessenger* mess = 0;
+  G4VModularPhysicsList* physlist = 0;
   G4String physName = "";
-
-  // Physics List name defined via 3nd argument
-  if (argc==3) { physName = argv[2]; }
-
+  
   // Physics List name defined via environment variable
-  if("" == physName) {
-    char* path = getenv("PHYSLIST");
-    if (path) { physName = G4String(path); }
-  }
-
-  // reference PhysicsList via its name
-  if("" != physName && factory.IsReferencePhysList(physName)) {
-    physlist = factory.GetReferencePhysList(physName);
-
-    // added extra EM options
-    physlist->RegisterPhysics(new G4EmUserPhysics(1));
-
-    // instantiated messenger
-    mess = new PhysicsListMessenger();
-  } 
-
-  // local Physics List
-  if(!physlist) { physlist = new PhysicsList(); }
-  */
+  char* path = getenv("PHYSLIST");
+  if (path) { physName = G4String(path); }
+  
+  if(physName != "" && factory.IsReferencePhysList(physName))
+    {
+      physlist = factory.GetReferencePhysList(physName);
+    }
+  if (physlist)
+    {
+      G4cout << "Going to register G4ParallelWorldPhysics" << G4endl;
+      physlist->RegisterPhysics(new G4ParallelWorldPhysics("DetectorROGeometry"));
+    }
+  else
+    {
+      G4cout << "Using PhysicsList()" << G4endl;
+      physlist = new PhysicsList();
+    }
+  
   // define physics
   runManager->SetUserInitialization(physlist);
+
   // define primary generator action
   runManager->SetUserInitialization(new ActionInitialization());
 
-  //runManager->SetUserInitialization(new PhysicsList);
-  
   // get the pointer to the User Interface manager
   G4UImanager* UI = G4UImanager::GetUIpointer();  
   // Initialize G4 kernel

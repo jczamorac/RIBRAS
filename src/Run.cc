@@ -5,7 +5,7 @@
 
 #include "Analysis.hh"
 #include "Run.hh"
-#include "SiliconMonitorHit.hh"
+#include "MonitorHit.hh"
 
 #include "G4SDManager.hh"
 #include "G4DigiManager.hh"
@@ -54,7 +54,7 @@ void Run::RecordEvent(const G4Event* aEvent)
   if ( hitsCollID == -1 )
     hitsCollID = G4SDManager::GetSDMpointer()->GetCollectionID(hitsCollName);
   
-  const  SiliconMonitorHitsCollection* fHCMonitor = static_cast<const SiliconMonitorHitsCollection*>(HCE->GetHC(hitsCollID));
+  const  MonitorHitsCollection* fHCMonitor = static_cast<const MonitorHitsCollection*>(HCE->GetHC(hitsCollID));
 
   // Reading info
   G4int nMonitorHits = fHCMonitor->entries();
@@ -65,7 +65,7 @@ void Run::RecordEvent(const G4Event* aEvent)
       G4double r=0*mm;
       for ( G4int d = 0 ; d< nMonitorHits ; d++ )
 	{
-	  SiliconMonitorHit* aHit = static_cast<SiliconMonitorHit*>( fHCMonitor->GetHit( d ) );
+	  MonitorHit* aHit = static_cast<MonitorHit*>( fHCMonitor->GetHit( d ) );
 	  //hit->Print();
 	  a1=0*mm; a2=0*mm; a3=0*mm; r= 0*mm;
 	  G4ThreeVector pos =aHit->GetIncidencePosition()/mm;

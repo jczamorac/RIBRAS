@@ -1,12 +1,12 @@
 /*!
-  @file SiliconMonitorHit.hh
-  @based on BeamTestSiliconMonitorHit class -> J.C. Zamora  jczamorac@gmail.com
-  @author Flechas (D. Flechas dcflechasg@unal.edu.co)
+  @file MonitorHit.hh
+  @based on BeamTestMonitorHit class -> J.C. Zamora  jczamorac@gmail.com
+  @modified by Flechas (D. Flechas dcflechasg@unal.edu.co)
   @date  Nov. 2018
 */
 
-#ifndef SILICONMONITORHIT_HH
-#define SILICONMONITORHIT_HH
+#ifndef MONITORHIT_HH
+#define MONITORHIT_HH
 
 #include "G4Allocator.hh"
 #include "G4ThreeVector.hh"
@@ -14,15 +14,15 @@
 #include "G4ParticleDefinition.hh"
 #include "G4VHit.hh"
 
-class SiliconMonitorHit : public G4VHit {
+class MonitorHit : public G4VHit {
 
 public:
   
-  SiliconMonitorHit();
-  SiliconMonitorHit(const SiliconMonitorHit &right);
-  virtual ~SiliconMonitorHit();
-  const SiliconMonitorHit& operator=(const SiliconMonitorHit &right);
-  G4int operator==(const SiliconMonitorHit &right) const;
+  MonitorHit();
+  MonitorHit(const MonitorHit &right);
+  virtual ~MonitorHit();
+  const MonitorHit& operator=(const MonitorHit &right);
+  G4int operator==(const MonitorHit &right) const;
   
   inline void *operator new(size_t);
   inline void operator delete(void *aHit);
@@ -50,20 +50,20 @@ private:
   G4double fITime;
 };
 
-typedef G4THitsCollection<SiliconMonitorHit> SiliconMonitorHitsCollection;
+typedef G4THitsCollection<MonitorHit> MonitorHitsCollection;
 
-extern G4ThreadLocal G4Allocator<SiliconMonitorHit>* SiliconMonitorHitsAllocator;
+extern G4ThreadLocal G4Allocator<MonitorHit>* MonitorHitsAllocator;
 
-inline void* SiliconMonitorHit::operator new(size_t)
+inline void* MonitorHit::operator new(size_t)
 {
-  if(!SiliconMonitorHitsAllocator)
-    SiliconMonitorHitsAllocator = new G4Allocator<SiliconMonitorHit>;
-  return (void *) SiliconMonitorHitsAllocator->MallocSingle();
+  if(!MonitorHitsAllocator)
+    MonitorHitsAllocator = new G4Allocator<MonitorHit>;
+  return (void *) MonitorHitsAllocator->MallocSingle();
 }
 
-inline void SiliconMonitorHit::operator delete(void* aHit)
+inline void MonitorHit::operator delete(void* aHit)
 {
-  SiliconMonitorHitsAllocator->FreeSingle((SiliconMonitorHit*) aHit);
+  MonitorHitsAllocator->FreeSingle((MonitorHit*) aHit);
 }
 
 #endif

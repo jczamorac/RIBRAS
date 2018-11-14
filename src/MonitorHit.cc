@@ -1,26 +1,26 @@
 /*!
-  @file SiliconMonitorHit.cc
-  @based on BeamTestSiliconMonitorHit class -> J.C. Zamora  jczamorac@gmail.com
-  @author Flechas (D. Flechas dcflechasg@unal.edu.co)
+  @file MonitorHit.cc
+  @based on BeamTestMonitorHit class -> J.C. Zamora  jczamorac@gmail.com
+  @modified by Flechas (D. Flechas dcflechasg@unal.edu.co)
   @date  Nov. 2018
 */
-#include "SiliconMonitorHit.hh"
+#include "MonitorHit.hh"
 
 #include "G4ios.hh"
 #include "G4UnitsTable.hh"
 #include "G4SystemOfUnits.hh"
 
-G4ThreadLocal G4Allocator<SiliconMonitorHit>* SiliconMonitorHitsAllocator = nullptr;
+G4ThreadLocal G4Allocator<MonitorHit>* MonitorHitsAllocator = nullptr;
 
-SiliconMonitorHit::SiliconMonitorHit()
+MonitorHit::MonitorHit()
   : fIPD(0), fIKEnergy(0.0), fIPosition(0), fIMomentumD(0), fITime(0.0)
 { }
 
-SiliconMonitorHit::~SiliconMonitorHit() {}
+MonitorHit::~MonitorHit() {}
 
-void SiliconMonitorHit::Draw() {}
+void MonitorHit::Draw() {}
 
-SiliconMonitorHit::SiliconMonitorHit(const SiliconMonitorHit &right)
+MonitorHit::MonitorHit(const MonitorHit &right)
   : G4VHit()
 {
   fIPD = right.fIPD;
@@ -29,7 +29,7 @@ SiliconMonitorHit::SiliconMonitorHit(const SiliconMonitorHit &right)
   fITime = right.fITime;
 }
 
-const SiliconMonitorHit& SiliconMonitorHit::operator=(const SiliconMonitorHit &right)
+const MonitorHit& MonitorHit::operator=(const MonitorHit &right)
 {
   fIPD = right.fIPD;
   fIKEnergy = right.fIKEnergy;
@@ -38,12 +38,12 @@ const SiliconMonitorHit& SiliconMonitorHit::operator=(const SiliconMonitorHit &r
   return *this;
 }
 
-G4int SiliconMonitorHit::operator==(const SiliconMonitorHit&) const{
+G4int MonitorHit::operator==(const MonitorHit&) const{
   return false;
   //returns false because there currently isnt need to check for equality yet
 }
 
-void SiliconMonitorHit::Print()
+void MonitorHit::Print()
 {
    if( fIPD->GetParticleName()=="Li6[0.0]" || fIPD->GetParticleName()=="e-"){ }
    else{	

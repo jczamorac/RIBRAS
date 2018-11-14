@@ -1,14 +1,18 @@
-Base simulation: Version 0 of RIBRAS simulation in Multi-Threading
+Base simulation ready: Version 0.1 of RIBRAS simulation in Multi-Threading
 mode. Simulation compiles and runs.
 
 The aim is to update the simulation (unsolenoide) to Multi-Thread mode
-of RIBRAS line, USP, writen by J.C. Zamora (master thesis ~2013?).
+of RIBRAS line, USP, written by J.C. Zamora (master thesis ~2013?).
+
+SiliconMonitor classes were updated to Monitor classes. These classes
+are used to register information about entry particles.
 
 The simulation includes:
+- Physics List -> Imported from examples/extended/Hadrontherapy
 - Basic geometry -> one solenoid
 - Primary particle -> ParticleGun and GPS
 - Electromagnetic field -> following the base simulation
-- One Sensitive Detector -> SDSiliconMonitor which uses SiliconHit
+- One Sensitive Detector -> SDMonitor which uses MonitorHit -> Entry particles
 - EventAction -> It so not do anything XD
 - Output -> Root
             - Defined at RunAction
@@ -18,21 +22,27 @@ The simulation includes:
 - Original classes BeamTestEventAction and Analysis were migrated and
   rewritten at RunAction and Run.
 
+NOTE: The original PhysicsList (Zamora's simulation) was imported from
+old Hadrontherapy example and it does not work in this moment. I
+imported the new physics list from the actualized example.
+
 DO IT:
--Indluded:
+- Include user-defined PhysicsList
+-Included:
     - EventAction
     - Analysis
     - RunAction
     - Run
-    - SDSilicoMonitor
-    - SiliconMonitorHit
+    - SDMonitor
+    - MonitorHit
     - Macros
-    
+
+
 TO DO:
-- Indlude user-defined PhysicsList
+
 - Include other sensitive detectors
-- Preliminar test of the simulation
-- Define Solenoid as idependent object (Construc_Solenoid)
-- Define Electromagnetic field for more than one soleniod
+- Preliminary test of the simulation
+- Define Solenoid as independent object (Construct_Solenoid)
+- Define Electromagnetic field for more than one solenoid
 - Final test of the simulation
 - Feedback

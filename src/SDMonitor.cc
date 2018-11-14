@@ -1,12 +1,12 @@
 /*!
-  @file SDSiliconMonitor.cc
-  @based on BeamTestSiliconMonitor class -> J.C. Zamora  jczamorac@gmail.com
-  @author Flechas (D. Flechas dcflechasg@unal.edu.co)
+  @file SDMonitor.cc
+  @based on BeamTestMonitor class -> J.C. Zamora  jczamorac@gmail.com
+  @modified by Flechas (D. Flechas dcflechasg@unal.edu.co)
   @date  Nov. 2018
 */
 
-#include "SDSiliconMonitor.hh"
-#include "SiliconMonitorHit.hh"
+#include "SDMonitor.hh"
+#include "MonitorHit.hh"
 
 #include "G4HCofThisEvent.hh"
 #include "G4SDManager.hh"
@@ -14,19 +14,19 @@
 #include "G4TouchableHistory.hh"
 #include "G4Track.hh"
 
-SDSiliconMonitor::SDSiliconMonitor(const G4String& name)
+SDMonitor::SDMonitor(const G4String& name)
    :G4VSensitiveDetector(name)
 {
    collectionName.insert( "siliconMonitorHCollection" );
    fHitsCollectionID = -1;
 }
 
-SDSiliconMonitor::~SDSiliconMonitor() {}
+SDMonitor::~SDMonitor() {}
 
-void SDSiliconMonitor::Initialize(G4HCofThisEvent* hitsCollectionOfThisEvent)
+void SDMonitor::Initialize(G4HCofThisEvent* hitsCollectionOfThisEvent)
 {
    fHitsCollection =
-      new SiliconMonitorHitsCollection(SensitiveDetectorName, collectionName[0]);
+      new MonitorHitsCollection(SensitiveDetectorName, collectionName[0]);
  
   if ( fHitsCollectionID < 0 )
        fHitsCollectionID = G4SDManager::GetSDMpointer()->GetCollectionID(fHitsCollection);
@@ -36,14 +36,14 @@ void SDSiliconMonitor::Initialize(G4HCofThisEvent* hitsCollectionOfThisEvent)
  
 }
 
-G4bool SDSiliconMonitor::ProcessHits(G4Step* aStep, G4TouchableHistory*)
+G4bool SDMonitor::ProcessHits(G4Step* aStep, G4TouchableHistory*)
 {
 
 // Limited by Geom Boundary?
    if ( aStep->GetPreStepPoint()->GetStepStatus() == fGeomBoundary )
    {
       // Create Hit 
-      SiliconMonitorHit* aHit = new SiliconMonitorHit();
+      MonitorHit* aHit = new MonitorHit();
       fHitsCollection->insert( aHit );
 
       // Get Transportaion Matrix
@@ -71,4 +71,4 @@ G4bool SDSiliconMonitor::ProcessHits(G4Step* aStep, G4TouchableHistory*)
    return true;
 }
 
-void SDSiliconMonitor::EndOfEvent(G4HCofThisEvent*) {}
+void SDMonitor::EndOfEvent(G4HCofThisEvent*) {}
