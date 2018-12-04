@@ -20,45 +20,38 @@
 // * statement, and all its terms.                                    *
 // ********************************************************************
 //
-// $Id: A01MagneticField.hh,v 1.3 2002/12/13 11:34:29 gunter Exp $
+// $Id: MagneticFieldMessenger.hh,v 1.3 2002/12/13 11:34:29 gunter Exp $
 // --------------------------------------------------------------
 //
-// Original version: J. Zamora 20??
-// Modified (October 2018) by: D. Flechas (dcflechasg@unal.edu.co)
-//                             Andre (andreserra@ymail.com)
-//              
+#ifndef MagneticFieldMessenger_h
+#define MagneticFieldMessenger_h 1
 
-#ifndef MagneticField_H
-#define MagneticField_H 1
+class MagneticField;
+class G4UIcmdWithADoubleAndUnit;
 
+#include "G4UImessenger.hh"
 #include "globals.hh"
-#include "G4MagneticField.hh"
-#include "G4ThreeVector.hh"
-class MagneticFieldMessenger;
 
-
-class MagneticField : public G4MagneticField
+class MagneticFieldMessenger: public G4UImessenger
 {
-public:
-  MagneticField();
-  ~MagneticField();
+  public:
+    MagneticFieldMessenger(MagneticField* mpga);
+    ~MagneticFieldMessenger();
 
-  virtual void GetFieldValue( const  double Point[3],
-                               double *Bfield ) const;
-  
-private:
-  MagneticFieldMessenger* messenger;
-  G4double Bz;
-  G4double rmax;
-  G4double l_med;
-  G4double k;
-  G4double current;
-  
-public:
-  inline void SetCurrent(G4double val) { current = val; }
-  inline G4double GetCurrent() const { return current; }
-    
+  public:
+    void SetNewValue(G4UIcommand * command,G4String newValues);
+    G4String GetCurrentValue(G4UIcommand * command);
+
+  private:
+    MagneticField * target;
+
+    G4UIcmdWithADoubleAndUnit*  fieldCmd;
+
 };
 
 #endif
+
+
+		
+
 

@@ -29,6 +29,7 @@
 #include "StepMax.hh"
 #include "StepMaxMessenger.hh"
 
+
 /////////////////////////////////////////////////////////////////////////////
 StepMax::StepMax(const G4String& processName)
  : G4VDiscreteProcess(processName),MaxChargedStep(DBL_MAX)
@@ -61,7 +62,8 @@ if((MaxChargedStep > 0.) &&
    (aTrack.GetVolume() != 0) && ((aTrack.GetVolume()->GetName() == "DetectorPhys")||(aTrack.GetVolume()->GetName() == "InternalChamber")||(aTrack.GetVolume()->GetName() == "CollimatorHole")||(aTrack.GetVolume()->GetName() == "PhysFourthTQuad")||(aTrack.GetVolume()->GetName() == "PhysThirdTQuad")||(aTrack.GetVolume()->GetName() == "PhysSecondTQuad")||(aTrack.GetVolume()->GetName() == "PhysFirstTQuad")||(aTrack.GetVolume()->GetName() =="physQuadChamber")||(aTrack.GetVolume()->GetName() =="PVirtualMag")||(aTrack.GetVolume()->GetName() =="PhysicCup")))
 
      ProposedStep = MaxChargedStep;
-
+       
+  
   return ProposedStep;
 }
 

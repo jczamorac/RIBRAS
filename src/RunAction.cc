@@ -15,13 +15,14 @@
  
 RunAction::RunAction()
   : G4UserRunAction()
+  
 {
   auto RootManager = G4RootAnalysisManager::Instance();
   RootManager->SetNtupleMerging(true);
   RootManager->SetVerboseLevel(1);
-  RootManager->SetFileName("test"); // outRoot
+  
 
-  RootManager->CreateH2("dE-E","X (mm) - Y (mm)",100,-100,100,100,-100,100); // Id =0
+  RootManager->CreateH2("X-Y","X (mm) - Y (mm)",500,-100,100,500,-100,100); // Id =0
   RootManager->CreateH2("R-TOF","R (mm) - TOF (s)",100,-1,100,100,50,300); // Id =1
 
   // *** Creating ntuple: Calorimeter Id = 0
@@ -54,6 +55,10 @@ void RunAction::BeginOfRunAction(const G4Run* aRun )
 {
   G4cout<<"### Starting Run: "<<aRun->GetRunID()<<G4endl;
   auto RootManager = G4RootAnalysisManager::Instance();
+  std::ostringstream fn;
+  //fn <<"Run_"<<runcounter++ ;
+  fn <<"Run_"<< aRun->GetRunID();
+  RootManager->SetFileName(fn.str().data()); // outRoot
   RootManager->OpenFile();
   //inform the runManager to save random number seed
   G4RunManager::GetRunManager()->SetRandomNumberStore(false);

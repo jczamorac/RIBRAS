@@ -50,7 +50,7 @@ file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
 
 #----------------------------------------------------------------------------
 # Add CADMesh
-find_package(cadmesh)
+#find_package(cadmesh)
 
 
 #----------------------------------------------------------------------------
@@ -60,7 +60,7 @@ find_package(cadmesh)
 #set(ROOT_LIBRARY_PROPERTIES ${ROOT_LIBRARY_PROPERTIES}) ## test DFlechas
 add_executable(USP_RIBRAS USP_RIBRAS.cc ${sources} ${headers})
 target_link_libraries(USP_RIBRAS ${Geant4_LIBRARIES})
-target_link_libraries(USP_RIBRAS ${cadmesh_LIBRARIES})
+#target_link_libraries(USP_RIBRAS ${cadmesh_LIBRARIES})
 #target_link_libraries(USP_RIBRAS ${Geant4_LIBRARIES} ${ROOT_LIBRARIES}) ## test DFlechas
 
 #----------------------------------------------------------------------------

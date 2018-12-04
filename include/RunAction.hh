@@ -23,6 +23,7 @@ public:
   void BeginOfRunAction(const G4Run*);
   void EndOfRunAction(const G4Run*);
 private:
+  
 };
  
 #endif /* RUNACTION_HH_ */

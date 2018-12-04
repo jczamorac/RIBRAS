@@ -29,7 +29,7 @@
 //
 
 #include "MagneticField.hh"
-//#include "MagneticFieldMessenger.hh"
+#include "MagneticFieldMessenger.hh"
 #include "G4UImanager.hh"
 #include "G4UIterminal.hh"
 
@@ -42,24 +42,27 @@
 
 MagneticField::MagneticField()
 {
-  // messenger = new MagneticFieldMessenger(this);
-  k = 0.0407833;
-  rmax = 19.2*cm;
-  l_med = 34.*cm;
-  field = 22.0*tesla;
+   messenger = new MagneticFieldMessenger(this);
+  k = 0.04078336599; //constant of RIBRAS solenoids 
+  rmax = 19.2034*cm; // coil radius
+  l_med = 33.9979*cm; // half coil length
+  current = 22.0*tesla; //electric current [Amp] (tesla units are included just for B)
+
+  
 }
 
 MagneticField::~MagneticField()
 {
-  //delete messenger;
+  delete messenger;
 }
 
 void MagneticField::GetFieldValue(const double Point[3],double *Bfield) const
 {
   
 
-  if(abs(Point[2])<110.*cm && sqrt(Point[0]*Point[0]+Point[1]*Point[1])<rmax)
+  if(fabs(Point[2])<110.*cm /*&& sqrt(Point[0]*Point[0]+Point[1]*Point[1])<rmax*/)
     {
+		
 
       // G4cout << Point[2]/cm<<G4endl;
       G4double z_mas = Point[2]+l_med;
@@ -74,10 +77,10 @@ void MagneticField::GetFieldValue(const double Point[3],double *Bfield) const
       G4double fz2_mas = (z_mas)/(pow(z_menos*z_menos+rmax*rmax,2.5));
       G4double fz2_menos = (z_menos)/(pow(z_mas*z_mas+rmax*rmax,2.5));
       G4double factor = 0.945;	
-      G4double br = -0.5*r*k*field*factor*rmax*rmax*(fr_menos-fr_mas)+0.375*r*r*r*rmax*rmax*k*field*factor*(fr2_menos-fr2_mas);
+      G4double br = -0.5*r*k*current*factor*rmax*rmax*(fr_menos-fr_mas)+0.375*r*r*r*rmax*rmax*k*current*factor*(fr2_menos-fr2_mas);
   
 
-      Bfield[2] = k*field*factor*(fz_menos-fz_mas)-0.75*r*r*rmax*rmax*k*field*factor*(fz2_mas-fz2_menos); 
+      Bfield[2] = k*current*factor*(fz_menos-fz_mas)-0.75*r*r*rmax*rmax*k*current*factor*(fz2_mas-fz2_menos); 
       Bfield[0] = br*Point[0]/r;
       Bfield[1] = br*Point[1]/r;
       //G4cout << Bz<<G4endl;	
@@ -88,5 +91,6 @@ void MagneticField::GetFieldValue(const double Point[3],double *Bfield) const
       Bfield[1] = 0.;
       // G4cout << Bz<<G4endl;
     }
+
 }
 

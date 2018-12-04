@@ -141,7 +141,7 @@ void SetupConstruction::ConstructSetup(void)
   ////////////////////////////
   G4double monitor_length = 50.0*cm;
   G4double monitor_thick = 20.0*um;
-  G4ThreeVector Pos_BeamMonitor = G4ThreeVector(0.,0.,150.*cm);
+  G4ThreeVector Pos_BeamMonitor = G4ThreeVector(0.,0.,150.*cm); // distance respect to the center of the Solenoid 1
   
   G4VSolid* Sol_BeamMonitor = new G4Box("S_BeamMonitor", // Name
                                          monitor_length/2.0,                // x half length
@@ -164,7 +164,7 @@ void SetupConstruction::ConstructSetup(void)
   ////////////////
 
   G4double Solenoid_length = 100.0*cm;
-  G4double Solenoid_diameter_inner = 30.0*cm;
+  G4double Solenoid_diameter_inner = 30.05*cm; //bore diameter
   G4double Solenoid_diameter_outer = 100.0*cm;
 
   G4ThreeVector Pos_Solenoid = G4ThreeVector();
@@ -191,8 +191,8 @@ void SetupConstruction::ConstructSetup(void)
   /////////////////////////////
   /// magnetic field region ///
   /////////////////////////////
-  G4double Mag_diameter = Solenoid_diameter_inner;
-  G4double Mag_length = 68.0*cm;
+  G4double Mag_diameter = 30.0*cm;
+  G4double Mag_length = 68.0*cm; //coil length
  
   
   G4VSolid* Sol_Magnet = new G4Tubs("S_Magnet",0.,Mag_diameter/2.0,Mag_length/2.0,0.,360.*deg);
@@ -242,6 +242,12 @@ void SetupConstruction::ConstructSDandField()
   G4bool fieldIsInitialized = false;
   if(!fieldIsInitialized)
   {
+
+    //magneticField->SetCurrent(21.336); //electric current of solenoid 1 (Amp)
+    
+    G4cout<<"Creating Magnetic Field 1: I = "<<magneticField->GetCurrent()<<" Amp"<<G4endl;
+    
+
     G4MagIntegratorStepper* fStepper;
 
     G4FieldManager* fieldMgr

@@ -85,16 +85,13 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   
     }
   	
-  double a = G4UniformRand();
-  G4double phi = 2*pi*(a);
-  G4double theta = 0.066667*pi*(G4UniformRand()-0.5);
-  //G4double theta = 0.066667*pi*(G4UniformRand());	
-  //G4double theta = 0.0111*pi;
-  if( abs(theta) < 0.0349  ){ 
-    theta = 0.07; 	 	
-  }
- 	
-  //G4cout<<"angulo aleatotio  "<<angle<<G4endl;
+  
+  G4double phi = 2*pi*G4UniformRand();
+  G4double theta;
+  do{ theta = 0.066667*pi*(G4UniformRand()-0.5);}
+    while(abs(theta) < 0.0349);
+   	
+  //G4cout<<"angulo aleatotio  "<<theta<<G4endl;
   //particleGun->SetParticleEnergy(12.9*MeV);	
   particleGun->SetParticleMomentumDirection(G4ThreeVector(sin(theta)*cos(phi),sin(theta)*sin(phi),cos(theta)));
   particleGun->GeneratePrimaryVertex(anEvent);
